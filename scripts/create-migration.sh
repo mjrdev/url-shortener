@@ -22,7 +22,7 @@ filename="migrations/${timestamp}_${slug}.go"
 
 mkdir -p "$(dirname "$filename")"
 
-cp ./templates/migration-template.go "$filename"
+cp ./templates/migration-template "$filename"
 sed -i "s/ID: \"---\"/ID: \"${timestamp}\"/" "$filename"
 
 echo "Created migration: $filename"
