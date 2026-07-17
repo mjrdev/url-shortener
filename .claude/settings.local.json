@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(go build *)",
+      "Bash(chmod +x scripts/create-migration.sh)",
+      "Bash(./scripts/create-migration.sh \"test migration\")"
+    ]
+  }
+}
