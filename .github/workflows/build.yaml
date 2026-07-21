@@ -1,0 +1,61 @@
+name: Test, Build and Push Docker Image
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  id-token: write
+  contents: read
+
+env:
+  AWS_REGION: us-east-1
+  ECR_REGISTRY: 804306814577.dkr.ecr.us-east-1.amazonaws.com
+  ECR_REPOSITORY: urlshotter
+
+jobs:
+  test-build-push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials via OIDC - Conta A
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::723307322553:role/github_pipeline
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Assume role Conta B
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::804306814577:role/github_pipeline
+          aws-region: ${{ env.AWS_REGION }}
+          role-chaining: true
+
+      - name: Login to Amazon ECR
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Set image tag
+        run: echo "IMAGE_TAG=${GITHUB_SHA::7}" >> $GITHUB_ENV
+
+      - name: Build test image
+        run: |
+          docker build -f Dockerfile -t $ECR_REGISTRY/$ECR_REPOSITORY:test-$IMAGE_TAG .
+
+      - name: Run tests
+        run: |
+          docker run --rm $ECR_REGISTRY/$ECR_REPOSITORY:test-$IMAGE_TAG php artisan test --coverage --min=80
+
+      - name: Build production image
+        run: |
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+
+      - name: Push Docker image to ECR
+        if: github.event_name == 'push'
+        run: |
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
