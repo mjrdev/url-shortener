@@ -9,7 +9,6 @@ import (
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/mjrdev/internal/config"
 	"github.com/mjrdev/internal/router"
-	"github.com/mjrdev/pkg/cache"
 
 	"github.com/joho/godotenv"
 )
@@ -26,7 +25,7 @@ func main() {
 
 	router.Router(r)
 	config.Db()
-	cache.Rdb()
+	config.Rdb()
 
 	fmt.Println("listening on port 3000")
 	http.ListenAndServe(":3000", r)

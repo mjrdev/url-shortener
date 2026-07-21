@@ -1,4 +1,4 @@
-package cache
+package config
 
 import (
 	"crypto/tls"

@@ -15,7 +15,12 @@ func Router(router chi.Router) {
 			r.Use(middleware.JwtMiddleware)
 
 			r.Get("/me", handler.UserShow)
+
+			r.Post("/url", handler.StoreUrl)
+			r.Delete("/url/{id}", handler.DeleteUrl)
+			r.Get("/url/{short_url}", handler.ShowUrl)
+			r.Get("/url", handler.ListUrl)
 		})
 	})
-
+	router.Get("/u/{path}", handler.Redirect)
 }

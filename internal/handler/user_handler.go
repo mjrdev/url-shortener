@@ -14,7 +14,6 @@ import (
 )
 
 func UserCreate(w http.ResponseWriter, r *http.Request) {
-
 	req, ok := validator.Validate[request.CreateUserRequest](w, r)
 	if !ok {
 		return

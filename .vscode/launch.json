@@ -14,9 +14,7 @@
       "request": "launch",
       "mode": "auto",
       "program": "${workspaceFolder}/cmd/api",
-      "env": {
-        "DATABASE_URL": "postgres://user:pass@localhost/db"
-      }
+      "envFile": "${workspaceFolder}/.env"
     }
   ]
 }
