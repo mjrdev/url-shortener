@@ -11,12 +11,7 @@ on:
 permissions:
   id-token: write
   contents: read
-
-env:
-  AWS_REGION: us-east-1
-  ECR_REGISTRY: 804306814577.dkr.ecr.us-east-1.amazonaws.com
-  ECR_REPOSITORY: urlshotter
-
+  
 jobs:
   build-push:
     runs-on: ubuntu-latest
