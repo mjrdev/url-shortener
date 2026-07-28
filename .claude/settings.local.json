@@ -3,7 +3,13 @@
     "allow": [
       "Bash(go build *)",
       "Bash(chmod +x scripts/create-migration.sh)",
-      "Bash(./scripts/create-migration.sh \"test migration\")"
+      "Bash(./scripts/create-migration.sh \"test migration\")",
+      "mcp__postgres__execute_sql",
+      "mcp__postgres__get_top_queries"
     ]
-  }
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "postgres"
+  ]
 }
