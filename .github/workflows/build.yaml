@@ -23,13 +23,13 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: arn:aws:iam::723307322553:role/urlshortener-github-actions
-          aws-region: ${{ $AWS_REGION }}
+          aws-region: ${{ vars.AWS_REGION }}
 
       - name: Assume role Conta B
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: arn:aws:iam::804306814577:role/github_pipeline
-          aws-region: ${{ $AWS_REGION }}
+          aws-region: ${{ vars.AWS_REGION }}
           role-chaining: true
 
       - name: Login to Amazon ECR
@@ -40,7 +40,7 @@ jobs:
 
       - name: Build image
         run: |
-          docker build -f Dockerfile -t $ECR_REGISTRY/$ECR_REPOSITORY:test-$IMAGE_TAG .
+          docker build -f Dockerfile -t vars.ECR_REGISTRY/secrets.ECR_REPOSITORY:test-$IMAGE_TAG .
 
       # - name: Run tests
       #   run: |
@@ -53,4 +53,4 @@ jobs:
       - name: Push Docker image to ECR
         if: github.event_name == 'push'
         run: |
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          docker push vars.ECR_REGISTRY/secrets.ECR_REPOSITORY:$IMAGE_TAG
