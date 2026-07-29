@@ -44,7 +44,7 @@ jobs:
 
       # - name: Run tests
       #   run: |
-      #     docker run --rm $ECR_REGISTRY/$ECR_REPOSITORY:test-$IMAGE_TAG php artisan test --coverage --min=80
+      #     docker run --rm $ECR_REGISTRY/$ECR_REPOSITORY:test-$IMAGE_TAG'php artisan test --coverage --min=80
 
       # - name: Build production image
       #   run: |
