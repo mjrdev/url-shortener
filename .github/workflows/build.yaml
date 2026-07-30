@@ -19,18 +19,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Configure AWS credentials via OIDC - Conta A
+      - name: Configure AWS credentials via OIDC
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: arn:aws:iam::723307322553:role/urlshortener-github-actions
           aws-region: ${{ vars.AWS_REGION }}
-
-      - name: Assume role Conta B
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          role-to-assume: arn:aws:iam::804306814577:role/github_pipeline
-          aws-region: ${{ vars.AWS_REGION }}
-          role-chaining: true
 
       - name: Login to Amazon ECR
         uses: aws-actions/amazon-ecr-login@v2
